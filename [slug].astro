@@ -1,0 +1,99 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const ideas = await getCollection('ideas');
+  return ideas.map(idea => ({
+    params: { slug: idea.slug },
+    props: { idea },
+  }));
+}
+
+const { idea } = Astro.props;
+const { Content } = await idea.render();
+---
+
+<BaseLayout title={`${idea.data.title} — Idea Space`} description={idea.data.description}>
+  <article class="max-w-3xl mx-auto">
+    <header class="mb-12 pb-8 border-b border-primary/10">
+      <time class="text-sm font-mono text-primary/40 block mb-4">
+        {idea.data.date.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        })}
+      </time>
+      
+      <h1 class="text-5xl md:text-6xl font-display font-bold mb-6 leading-tight text-balance">
+        {idea.data.title}
+      </h1>
+      
+      {idea.data.description && (
+        <p class="text-xl text-primary/70 leading-relaxed mb-6">
+          {idea.data.description}
+        </p>
+      )}
+      
+      <div class="flex flex-wrap gap-2">
+        {idea.data.tags.map((tag: string) => (
+          <a 
+            href={`/tags/${tag}`}
+            class="text-xs font-mono px-3 py-1 bg-primary/5 rounded-full hover:bg-accent/10 transition-colors"
+          >
+            {tag}
+          </a>
+        ))}
+      </div>
+    </header>
+
+    <div class="prose prose-lg max-w-none">
+      <Content />
+    </div>
+
+    <footer class="mt-16 pt-8 border-t border-primary/10">
+      <a 
+        href="/" 
+        class="inline-flex items-center gap-2 text-sm font-medium hover:text-accent transition-colors"
+      >
+        ← Back to all ideas
+      </a>
+    </footer>
+  </article>
+
+  <style is:global>
+    .prose {
+      @apply text-primary/80;
+    }
+    .prose h2 {
+      @apply text-3xl font-display font-bold mt-12 mb-4;
+    }
+    .prose h3 {
+      @apply text-2xl font-display font-bold mt-8 mb-3;
+    }
+    .prose p {
+      @apply leading-relaxed mb-6;
+    }
+    .prose a {
+      @apply text-accent underline hover:no-underline;
+    }
+    .prose ul, .prose ol {
+      @apply space-y-2 mb-6;
+    }
+    .prose li {
+      @apply leading-relaxed;
+    }
+    .prose code {
+      @apply font-mono text-sm bg-primary/5 px-2 py-1 rounded;
+    }
+    .prose pre {
+      @apply bg-primary/5 p-4 rounded-lg overflow-x-auto mb-6;
+    }
+    .prose blockquote {
+      @apply border-l-4 border-accent pl-6 italic my-6;
+    }
+    .prose iframe {
+      @apply w-full aspect-video rounded-lg my-8;
+    }
+  </style>
+</BaseLayout>

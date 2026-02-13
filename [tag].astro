@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const ideas = await getCollection('ideas');
+  const allTags = [...new Set(ideas.flatMap(idea => idea.data.tags))];
+  
+  return allTags.map((tag) => {
+    const filteredIdeas = ideas
+      .filter(idea => idea.data.tags.includes(tag))
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+    
+    return {
+      params: { tag },
+      props: { ideas: filteredIdeas },
+    };
+  });
+}
+
+const { tag } = Astro.props;
+const { ideas } = Astro.props;
+---
+
+<BaseLayout title={`${tag} — Idea Space`}>
+  <div class="max-w-3xl mx-auto">
+    <div class="mb-12">
+      <a href="/tags" class="text-sm font-medium text-primary/60 hover:text-accent mb-4 inline-block">
+        ← All tags
+      </a>
+      <h1 class="text-5xl font-display font-bold mb-4">
+        {tag}
+      </h1>
+      <p class="text-primary/60">{ideas.length} {ideas.length === 1 ? 'idea' : 'ideas'}</p>
+    </div>
+
+    <div class="space-y-12">
+      {ideas.map((idea) => (
+        <article class="group">
+          <a href={`/ideas/${idea.slug}`} class="block">
+            <div class="flex items-start gap-6">
+              <time class="text-sm font-mono text-primary/40 pt-1 shrink-0">
+                {idea.data.date.toLocaleDateString('en-US', { 
+                  year: 'numeric', 
+                  month: 'short', 
+                  day: 'numeric' 
+                })}
+              </time>
+              
+              <div class="flex-1 space-y-3">
+                <h2 class="text-3xl font-display font-bold group-hover:text-accent transition-colors leading-tight">
+                  {idea.data.title}
+                </h2>
+                
+                {idea.data.description && (
+                  <p class="text-lg text-primary/70 leading-relaxed">
+                    {idea.data.description}
+                  </p>
+                )}
+              </div>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
