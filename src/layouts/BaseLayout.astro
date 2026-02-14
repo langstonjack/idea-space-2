@@ -20,11 +20,20 @@ const {
   <meta name="description" content={description}>
   <title>{title}</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💡</text></svg>">
+  <script is:inline>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
 </head>
 <body class="min-h-screen">
   <div class="grain-overlay"></div>
 
-  <header class="border-b border-primary/10 sticky top-0 bg-secondary/80 backdrop-blur-sm z-50">
+  <header class="border-b border-primary/10 dark:border-secondary/10 sticky top-0 bg-secondary/80 dark:bg-primary/80 backdrop-blur-sm z-50">
     <nav class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between">
       <a href="/" class="text-2xl font-display font-bold tracking-tight hover:text-accent transition-colors">
         Idea Space
@@ -33,6 +42,20 @@ const {
         <a href="/" class="text-sm font-medium hover:text-accent transition-colors">Ideas</a>
         <a href="/about" class="text-sm font-medium hover:text-accent transition-colors">About</a>
         <a href="/tags" class="text-sm font-medium hover:text-accent transition-colors">Tags</a>
+        <button
+          id="theme-toggle"
+          class="p-2 rounded-lg hover:bg-primary/10 dark:hover:bg-secondary/10 transition-colors"
+          aria-label="Toggle dark mode"
+        >
+          <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
       </div>
     </nav>
   </header>
@@ -41,8 +64,8 @@ const {
     <slot />
   </main>
 
-  <footer class="border-t border-primary/10 mt-24">
-    <div class="max-w-5xl mx-auto px-6 py-12 text-sm text-primary/60">
+  <footer class="border-t border-primary/10 dark:border-secondary/10 mt-24">
+    <div class="max-w-5xl mx-auto px-6 py-12 text-sm text-primary/60 dark:text-secondary/60">
       <p>Everything here is vibed out with AI. The ideas are mine, the execution is collaborative.</p>
       <p class="mt-2">CJ — {new Date().getFullYear()}</p>
     </div>
@@ -62,5 +85,12 @@ const {
       mix-blend-mode: overlay;
     }
   </style>
+
+  <script is:inline>
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+  </script>
 </body>
 </html>

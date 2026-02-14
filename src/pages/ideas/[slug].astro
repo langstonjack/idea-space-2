@@ -16,8 +16,8 @@ const { Content } = await idea.render();
 
 <BaseLayout title={`${idea.data.title} — Idea Space`} description={idea.data.description}>
   <article class="max-w-3xl mx-auto">
-    <header class="mb-12 pb-8 border-b border-primary/10">
-      <time class="text-sm font-mono text-primary/40 block mb-4">
+    <header class="mb-12 pb-8 border-b border-primary/10 dark:border-secondary/10">
+      <time class="text-sm font-mono text-primary/40 dark:text-secondary/40 block mb-4">
         {idea.data.date.toLocaleDateString('en-US', {
           year: 'numeric',
           month: 'long',
@@ -30,7 +30,7 @@ const { Content } = await idea.render();
       </h1>
 
       {idea.data.description && (
-        <p class="text-xl text-primary/70 leading-relaxed mb-6">
+        <p class="text-xl text-primary/70 dark:text-secondary/70 leading-relaxed mb-6">
           {idea.data.description}
         </p>
       )}
@@ -39,7 +39,7 @@ const { Content } = await idea.render();
         {idea.data.tags.map((tag: string) => (
           <a
             href={`/tags/${tag}`}
-            class="text-xs font-mono px-3 py-1 bg-primary/5 rounded-full hover:bg-accent/10 transition-colors"
+            class="text-xs font-mono px-3 py-1 bg-primary/5 dark:bg-secondary/10 rounded-full hover:bg-accent/10 transition-colors"
           >
             {tag}
           </a>
@@ -51,7 +51,7 @@ const { Content } = await idea.render();
       <Content />
     </div>
 
-    <footer class="mt-16 pt-8 border-t border-primary/10">
+    <footer class="mt-16 pt-8 border-t border-primary/10 dark:border-secondary/10">
       <a
         href="/"
         class="inline-flex items-center gap-2 text-sm font-medium hover:text-accent transition-colors"
@@ -63,7 +63,7 @@ const { Content } = await idea.render();
 
   <style is:global>
     .prose {
-      @apply text-primary/80;
+      @apply text-primary/80 dark:text-secondary/80;
     }
     .prose h2 {
       @apply text-3xl font-display font-bold mt-12 mb-4;
@@ -84,10 +84,10 @@ const { Content } = await idea.render();
       @apply leading-relaxed;
     }
     .prose code {
-      @apply font-mono text-sm bg-primary/5 px-2 py-1 rounded;
+      @apply font-mono text-sm bg-primary/5 dark:bg-secondary/10 px-2 py-1 rounded;
     }
     .prose pre {
-      @apply bg-primary/5 p-4 rounded-lg overflow-x-auto mb-6;
+      @apply bg-primary/5 dark:bg-secondary/10 p-4 rounded-lg overflow-x-auto mb-6;
     }
     .prose blockquote {
       @apply border-l-4 border-accent pl-6 italic my-6;

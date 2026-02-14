@@ -11,7 +11,7 @@
   }
 
   body {
-    @apply bg-secondary text-primary font-body;
+    @apply bg-secondary text-primary font-body dark:bg-primary dark:text-secondary;
   }
 
   h1, h2, h3, h4, h5, h6 {

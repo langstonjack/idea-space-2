@@ -22,9 +22,9 @@ const sortedTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
       {sortedTags.map(([tag, count]) => (
         <a
           href={`/tags/${tag}`}
-          class="text-sm font-mono px-4 py-2 bg-primary/5 rounded-full hover:bg-accent/10 transition-colors"
+          class="text-sm font-mono px-4 py-2 bg-primary/5 dark:bg-secondary/10 rounded-full hover:bg-accent/10 transition-colors"
         >
-          {tag} <span class="text-primary/40">({count})</span>
+          {tag} <span class="text-primary/40 dark:text-secondary/40">({count})</span>
         </a>
       ))}
     </div>

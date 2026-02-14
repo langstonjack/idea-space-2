@@ -25,13 +25,13 @@ const { ideas } = Astro.props;
 <BaseLayout title={`${tag} — Idea Space`}>
   <div class="max-w-3xl mx-auto">
     <div class="mb-12">
-      <a href="/tags" class="text-sm font-medium text-primary/60 hover:text-accent mb-4 inline-block">
+      <a href="/tags" class="text-sm font-medium text-primary/60 dark:text-secondary/60 hover:text-accent mb-4 inline-block">
         ← All tags
       </a>
       <h1 class="text-5xl font-display font-bold mb-4">
         {tag}
       </h1>
-      <p class="text-primary/60">{ideas.length} {ideas.length === 1 ? 'idea' : 'ideas'}</p>
+      <p class="text-primary/60 dark:text-secondary/60">{ideas.length} {ideas.length === 1 ? 'idea' : 'ideas'}</p>
     </div>
 
     <div class="space-y-12">
@@ -39,7 +39,7 @@ const { ideas } = Astro.props;
         <article class="group">
           <a href={`/ideas/${idea.slug}`} class="block">
             <div class="flex items-start gap-6">
-              <time class="text-sm font-mono text-primary/40 pt-1 shrink-0">
+              <time class="text-sm font-mono text-primary/40 dark:text-secondary/40 pt-1 shrink-0">
                 {idea.data.date.toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'short',
@@ -53,7 +53,7 @@ const { ideas } = Astro.props;
                 </h2>
 
                 {idea.data.description && (
-                  <p class="text-lg text-primary/70 leading-relaxed">
+                  <p class="text-lg text-primary/70 dark:text-secondary/70 leading-relaxed">
                     {idea.data.description}
                   </p>
                 )}
