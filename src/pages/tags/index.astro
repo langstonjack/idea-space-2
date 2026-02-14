@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const ideas = await getCollection('ideas');
+const tagCounts = new Map<string, number>();
+
+ideas.forEach(idea => {
+  idea.data.tags.forEach(tag => {
+    tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+  });
+});
+
+const sortedTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
+---
+
+<BaseLayout title="Tags — Idea Space">
+  <div class="max-w-2xl mx-auto">
+    <h1 class="text-5xl font-display font-bold mb-12">Tags</h1>
+
+    <div class="flex flex-wrap gap-3">
+      {sortedTags.map(([tag, count]) => (
+        <a
+          href={`/tags/${tag}`}
+          class="text-sm font-mono px-4 py-2 bg-primary/5 rounded-full hover:bg-accent/10 transition-colors"
+        >
+          {tag} <span class="text-primary/40">({count})</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

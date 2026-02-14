@@ -5,12 +5,12 @@ import { getCollection } from 'astro:content';
 export async function getStaticPaths() {
   const ideas = await getCollection('ideas');
   const allTags = [...new Set(ideas.flatMap(idea => idea.data.tags))];
-  
+
   return allTags.map((tag) => {
     const filteredIdeas = ideas
       .filter(idea => idea.data.tags.includes(tag))
       .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-    
+
     return {
       params: { tag },
       props: { ideas: filteredIdeas },
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
   });
 }
 
-const { tag } = Astro.props;
+const { tag } = Astro.params;
 const { ideas } = Astro.props;
 ---
 
@@ -40,18 +40,18 @@ const { ideas } = Astro.props;
           <a href={`/ideas/${idea.slug}`} class="block">
             <div class="flex items-start gap-6">
               <time class="text-sm font-mono text-primary/40 pt-1 shrink-0">
-                {idea.data.date.toLocaleDateString('en-US', { 
-                  year: 'numeric', 
-                  month: 'short', 
-                  day: 'numeric' 
+                {idea.data.date.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
                 })}
               </time>
-              
+
               <div class="flex-1 space-y-3">
                 <h2 class="text-3xl font-display font-bold group-hover:text-accent transition-colors leading-tight">
                   {idea.data.title}
                 </h2>
-                
+
                 {idea.data.description && (
                   <p class="text-lg text-primary/70 leading-relaxed">
                     {idea.data.description}

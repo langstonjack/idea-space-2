@@ -9,7 +9,7 @@
     @apply antialiased;
     scroll-behavior: smooth;
   }
-  
+
   body {
     @apply bg-secondary text-primary font-body;
   }
