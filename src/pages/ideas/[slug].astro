@@ -51,7 +51,15 @@ const { Content } = await idea.render();
       <Content />
     </div>
 
-    <footer class="mt-16 pt-8 border-t border-primary/10 dark:border-secondary/10">
+    <footer class="mt-16 pt-8 border-t border-primary/10 dark:border-secondary/10 space-y-6">
+      <div class="flex gap-3">
+        <button class="text-2xl opacity-40 hover:opacity-100 hover:scale-110 transition-all" aria-label="VHS">📼</button>
+        <button class="text-2xl opacity-40 hover:opacity-100 hover:scale-110 transition-all" aria-label="Smiley">☻</button>
+        <button class="text-2xl opacity-40 hover:opacity-100 hover:scale-110 transition-all" aria-label="Magnet">🧲</button>
+        <button class="text-2xl opacity-40 hover:opacity-100 hover:scale-110 transition-all" aria-label="Floppy">💾</button>
+        <button class="text-2xl opacity-40 hover:opacity-100 hover:scale-110 transition-all" aria-label="Half-moon">◐</button>
+      </div>
+
       <a
         href="/"
         class="inline-flex items-center gap-2 text-sm font-medium hover:text-accent transition-colors"
