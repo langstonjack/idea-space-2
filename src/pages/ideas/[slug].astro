@@ -104,4 +104,63 @@ const { Content } = await idea.render();
       @apply w-full aspect-video rounded-lg my-8;
     }
   </style>
+
+  <script is:inline>
+    // Make random words in the prose clickable with fun effects
+    if (window.location.pathname.includes('/dance-challenge-strategy')) {
+      const prose = document.querySelector('.prose');
+      if (prose) {
+        const textNodes = [];
+        const walk = document.createTreeWalker(prose, NodeFilter.SHOW_TEXT);
+        let node;
+        while (node = walk.nextNode()) {
+          if (node.parentElement.tagName !== 'SCRIPT' && node.textContent.trim()) {
+            textNodes.push(node);
+          }
+        }
+
+        const colors = ['#ff6b35', '#6b35ff', '#35ff6b', '#ff35d4', '#35d4ff', '#ffa535'];
+        const fonts = ['Fraunces', 'IBM Plex Mono', 'Comic Sans MS', 'Courier New', 'Georgia'];
+
+        const wordsToMake = ['Suno', 'TikTok', 'dance', 'camp', 'recap', 'synced', 'footage',
+                              'shareable', 'authentic', 'track', 'students', 'viral', 'strategy',
+                              'content', 'bumping', 'slaps', 'vibed', 'energy'];
+
+        textNodes.forEach(textNode => {
+          const text = textNode.textContent;
+          let html = text;
+
+          wordsToMake.forEach(word => {
+            const regex = new RegExp(`\\b(${word})\\b`, 'gi');
+            html = html.replace(regex, '<span class="clickable-word" style="cursor: pointer; display: inline-block; transition: all 0.2s;">$1</span>');
+          });
+
+          if (html !== text) {
+            const span = document.createElement('span');
+            span.innerHTML = html;
+            textNode.parentNode.replaceChild(span, textNode);
+          }
+        });
+
+        prose.addEventListener('click', (e) => {
+          if (e.target.classList.contains('clickable-word')) {
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
+            const randomEffect = Math.random();
+
+            if (randomEffect < 0.5) {
+              e.target.style.color = randomColor;
+            } else {
+              e.target.style.fontFamily = randomFont;
+            }
+
+            e.target.style.transform = 'scale(1.1) rotate(' + (Math.random() * 4 - 2) + 'deg)';
+            setTimeout(() => {
+              e.target.style.transform = 'scale(1) rotate(0deg)';
+            }, 200);
+          }
+        });
+      }
+    }
+  </script>
 </BaseLayout>
