@@ -14,7 +14,7 @@ const ideas = (await getCollection('ideas')).sort(
         Concepts, connections, and half-baked ideas worth sharing
       </h1>
       <p class="text-xl text-primary/70 leading-relaxed">
-        I see the world in opportunities to connect dots between tools, purpose, and realness. 
+        I see the world in opportunities to connect dots between tools, purpose, and realness.
         This is where those ideas live.
       </p>
     </div>
@@ -25,24 +25,24 @@ const ideas = (await getCollection('ideas')).sort(
           <a href={`/ideas/${idea.slug}`} class="block">
             <div class="flex items-start gap-6">
               <time class="text-sm font-mono text-primary/40 pt-1 shrink-0">
-                {idea.data.date.toLocaleDateString('en-US', { 
-                  year: 'numeric', 
-                  month: 'short', 
-                  day: 'numeric' 
+                {idea.data.date.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
                 })}
               </time>
-              
+
               <div class="flex-1 space-y-3">
                 <h2 class="text-3xl font-display font-bold group-hover:text-accent transition-colors leading-tight">
                   {idea.data.title}
                 </h2>
-                
+
                 {idea.data.description && (
                   <p class="text-lg text-primary/70 leading-relaxed">
                     {idea.data.description}
                   </p>
                 )}
-                
+
                 <div class="flex flex-wrap gap-2">
                   {idea.data.tags.map((tag: string) => (
                     <span class="text-xs font-mono px-3 py-1 bg-primary/5 rounded-full hover:bg-accent/10 transition-colors">

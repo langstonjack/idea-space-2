@@ -18,26 +18,26 @@ const { Content } = await idea.render();
   <article class="max-w-3xl mx-auto">
     <header class="mb-12 pb-8 border-b border-primary/10">
       <time class="text-sm font-mono text-primary/40 block mb-4">
-        {idea.data.date.toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric' 
+        {idea.data.date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
         })}
       </time>
-      
+
       <h1 class="text-5xl md:text-6xl font-display font-bold mb-6 leading-tight text-balance">
         {idea.data.title}
       </h1>
-      
+
       {idea.data.description && (
         <p class="text-xl text-primary/70 leading-relaxed mb-6">
           {idea.data.description}
         </p>
       )}
-      
+
       <div class="flex flex-wrap gap-2">
         {idea.data.tags.map((tag: string) => (
-          <a 
+          <a
             href={`/tags/${tag}`}
             class="text-xs font-mono px-3 py-1 bg-primary/5 rounded-full hover:bg-accent/10 transition-colors"
           >
@@ -52,8 +52,8 @@ const { Content } = await idea.render();
     </div>
 
     <footer class="mt-16 pt-8 border-t border-primary/10">
-      <a 
-        href="/" 
+      <a
+        href="/"
         class="inline-flex items-center gap-2 text-sm font-medium hover:text-accent transition-colors"
       >
         ← Back to all ideas
